@@ -58,6 +58,7 @@ public class AppBanco {
         JOptionPane.showMessageDialog(null, "Daremos inicio ao seu cadastro de conta");
         JOptionPane.showMessageDialog(null, "Seus dados são:\n\nNúmero da Conta: " + conta.getConta()+"\nAgencia: "+conta.getAgencia()+
         "\nSaldo: R$ "+conta.getSaldo());
+        conta.contas.add(conta);
         conta.setQuantContas((conta.getQuantContas()) + 1);
     return conta;
     }
@@ -96,9 +97,37 @@ public class AppBanco {
         "\n|        5 - Sair                |"));
 
         switch(opcao){
-        case 1: acoes.depositar(); break;
-        case 2: acoes.transferir(); break;
-        case 3: acoes.sacar(); break;
+        case 1: 
+            double valor = Double.parseDouble(JOptionPane.showInputDialog(null, "Digite o valor que deseja depositar"));
+            if(valor >= 0){
+                acoes.setSaldo(acoes.getSaldo() + valor);
+                JOptionPane.showMessageDialog(null, "Depósito concluído!");
+            }else {
+                JOptionPane.showMessageDialog(null, "Não foi possivel realizar o depósito, tente novamente mais tarde!");
+            }
+            break;
+        case 2:     
+            int contaRemetente = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite a conta de destino"));
+            if (contaRemetente : acoes.contas<>){
+                double valorTransf = Double.parseDouble(JOptionPane.showInputDialog(null, "Qual o valor da transferencia?"));
+                if (acoes.getSaldo() > 0 && acoes.getSaldo() <= valorTransf){
+                    acoes.setSaldo(acoes.getSaldo()-valorTransf);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Não é possivel realizar a transferencia deste valor");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Conta não encontrada");
+            }
+            break;
+        case 3: 
+            double valSaque = Double.parseDouble(JOptionPane.showInputDialog(null, "Quanto você deseja sacar hoje?"));
+            if (acoes.getSaldo() > 0 && acoes.getSaldo() <= valSaque){
+                acoes.setSaldo(acoes.getSaldo()- valSaque);
+                JOptionPane.showMessageDialog(null, "Você sacou R$ "+valSaque+", Lembre-se, cuidar das finanças faz bem para o bolso!");
+            }else{
+                JOptionPane.showMessageDialog(null, "Não é possivel realizar o saque deste valor");
+            }
+            break;
         case 4: 
             int case4 = Integer.parseInt(JOptionPane.showInputDialog(null, "Seu saldo em conta é: R$ "+acoes.getSaldo()+
             "\nGostaria de retornar ao Menu de opções ou encerrar o atendimento?"+
@@ -108,18 +137,17 @@ public class AppBanco {
                 return menuEscolha(args);
             }else if(case4 == 2){
                 JOptionPane.showMessageDialog(null, "Obrigado por utilizar nossos serviços");;
-             break;
             }else {
                 JOptionPane.showMessageDialog(null, "Opção inválida, Retornaremos para o menu de escolhas");
                 return menuEscolha(args);
-            }
-
+            } 
+            break;
         case 5:
             JOptionPane.showMessageDialog(null, "A ZARD BANK fica feliz em ter você como cliente, esperamos você de volta");
             System.exit(opcao); break;
         default : 
             JOptionPane.showMessageDialog(null, "Hummm, algo de errado não esta certo!\nque tal digitar novamente o número referente a opção?");
-        return menuEscolha(args);
+            return menuEscolha(args);
+        
         }
     }
-}

@@ -1,4 +1,4 @@
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
 
 public class Conta {
     int quantContas = 1;
@@ -6,12 +6,14 @@ public class Conta {
     int nunAgencia = 1;
     private Double saldo;
 
+    ArrayList<Conta> contas = new ArrayList<>();
+
     // GET
     public Double getSaldo() {
         return saldo;
     }
     public int getConta() {
-        return quantContas;
+        return nConta;
     }
     public int getAgencia() {
         return nunAgencia;
@@ -34,35 +36,5 @@ public class Conta {
     }
 
     // Funções
-
-    public void depositar() {
-        double valor = Double.parseDouble(JOptionPane.showInputDialog(null, "Digite o valor que deseja depositar"));
-        if(valor >= 0){
-            setSaldo(getSaldo() + valor);
-            JOptionPane.showMessageDialog(null, "Depósito concluído!");
-        }else {
-            JOptionPane.showMessageDialog(null, "Não foi possivel realizar o depósito, tente novamente mais tarde!");
-        }
-    }
-
-    public void sacar() {
-        double valSaque = Double.parseDouble(JOptionPane.showInputDialog(null, "Quanto você deseja sacar hoje?"));
-        if (saldo > 0 && saldo <= valSaque){
-            saldo = saldo - valSaque;
-        }else{
-            JOptionPane.showMessageDialog(null, "Não é possivel realizar o saque deste valor");
-        }
-
-    }
-
-    public void transferir() {
-        double valSaque = Double.parseDouble(JOptionPane.showInputDialog(null, "Quanto você deseja sacar hoje?"));
-        if (saldo > 0 && saldo <= valSaque){
-            saldo = saldo - valSaque;
-        }else{
-            JOptionPane.showMessageDialog(null, "Não é possivel realizar o saque deste valor");
-        }
-    }
-    
     
 }
