@@ -1,4 +1,5 @@
 import javax.swing.JOptionPane;
+import java.lang.Integer;
 
 public class AppBanco {
     public static void main(String[] args) {
@@ -7,6 +8,8 @@ public class AppBanco {
         Endereco endereco = getEndereco();
 
         Conta conta =  gerarConta();
+
+        AppBanco menu = menuEscolha(args);
     }
     public static Cliente getCliente(){
 
@@ -16,7 +19,7 @@ public class AppBanco {
         boolean valido = false;
         cliente.setNome(JOptionPane.showInputDialog(null, "Digite seu nome: "));
         cliente.setCpf(JOptionPane.showInputDialog(null, "Digite seu CPF: "));
-        cliente.setDataNasc(JOptionPane.showInputDialog(null, "Digite sua data de nascimentowe: "));
+        cliente.setDataNasc(JOptionPane.showInputDialog(null, "Digite sua data de nascimento: "));
         cliente.setEmail(JOptionPane.showInputDialog(null, "Digite seu Email: "));
         cliente.setSenha(JOptionPane.showInputDialog(null, "Digite sua senha de acesso: "));
         confirmaSenha = JOptionPane.showInputDialog(null, "Digite novamente a sua senha: ");
@@ -51,8 +54,10 @@ public class AppBanco {
     public static Conta gerarConta() {
         Conta conta = new Conta();
         conta.setConta(conta.getQuantContas());
-        JOptionPane.showMessageDialog(null, "daremos inicio ao seu cadastro de conta");
-        JOptionPane.showMessageDialog(null, "Seus dados são:\nConta: " + conta.getConta()+"\nAgencia: "+conta.getAgencia()+"");
+        conta.setSaldo(0.0);
+        JOptionPane.showMessageDialog(null, "Daremos inicio ao seu cadastro de conta");
+        JOptionPane.showMessageDialog(null, "Seus dados são:\n\nNúmero da Conta: " + conta.getConta()+"\nAgencia: "+conta.getAgencia()+
+        "\nSaldo: R$ "+conta.getSaldo());
         conta.setQuantContas((conta.getQuantContas()) + 1);
     return conta;
     }
@@ -80,26 +85,41 @@ public class AppBanco {
 
     }*/
 
-
-    public static Menu menuEscolha(String[] args){
+    public static AppBanco menuEscolha(String[] args){
+        Conta acoes = new Conta();
         int opcao = Integer.parseInt(JOptionPane.showInputDialog(null, "Bem vindo ao ZARD BANK\n"+
         "\nComo podemos te ajudar hoje? "+
         "\n|        1 - Depositar           |\n"+
         "\n|        2 - Transferir          |"+
         "\n|        3 - Sacar               |"+
-        "\n|        4 - Conferir dados      |"+
+        "\n|        4 - Ver saldo           |"+
         "\n|        5 - Sair                |"));
 
         switch(opcao){
-        case 1: conta.depositar(); break;
-        case 2: conta.transferir(); break;
-        case 3: conta.sacar(); break;
-        case 4: conta.conferirDados(); break;
+        case 1: acoes.depositar(); break;
+        case 2: acoes.transferir(); break;
+        case 3: acoes.sacar(); break;
+        case 4: 
+            int case4 = Integer.parseInt(JOptionPane.showInputDialog(null, "Seu saldo em conta é: R$ "+acoes.getSaldo()+
+            "\nGostaria de retornar ao Menu de opções ou encerrar o atendimento?"+
+            "\nDigite o número referente a opção de seu interesse:\n"+
+            "\n1 - Retornar ao Menu\n2 - Encerrar o atendimento"));
+            if (case4 == 1){
+                return menuEscolha(args);
+            }else if(case4 == 2){
+                JOptionPane.showMessageDialog(null, "Obrigado por utilizar nossos serviços");;
+             break;
+            }else {
+                JOptionPane.showMessageDialog(null, "Opção inválida, Retornaremos para o menu de escolhas");
+                return menuEscolha(args);
+            }
+
         case 5:
             JOptionPane.showMessageDialog(null, "A ZARD BANK fica feliz em ter você como cliente, esperamos você de volta");
             System.exit(opcao); break;
         default : 
             JOptionPane.showMessageDialog(null, "Hummm, algo de errado não esta certo!\nque tal digitar novamente o número referente a opção?");
+        return menuEscolha(args);
         }
     }
 }
